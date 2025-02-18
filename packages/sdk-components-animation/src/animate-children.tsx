@@ -22,7 +22,10 @@ const namespace = "@webstudio-is/sdk-components-animation";
 
 export const hooksAnimateChildren: Hook = {
   onNavigatorUnselect: (context, event) => {
-    if (event.instancePath[0].component === `${namespace}:${displayName}`) {
+    if (
+      event.instancePath.length > 0 &&
+      event.instancePath[0].component === `${namespace}:${displayName}`
+    ) {
       context.setMemoryProp(
         event.instancePath[0],
         animationCanPlayOnCanvasProperty,
@@ -31,7 +34,10 @@ export const hooksAnimateChildren: Hook = {
     }
   },
   onNavigatorSelect: (context, event) => {
-    if (event.instancePath[0].component === `${namespace}:${displayName}`) {
+    if (
+      event.instancePath.length > 0 &&
+      event.instancePath[0].component === `${namespace}:${displayName}`
+    ) {
       context.setMemoryProp(
         event.instancePath[0],
         animationCanPlayOnCanvasProperty,
