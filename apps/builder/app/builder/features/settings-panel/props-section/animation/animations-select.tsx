@@ -231,7 +231,9 @@ export const AnimationsSelect = ({ value, onChange }: Props) => {
                   <>
                     <SmallToggleButton
                       pressed={false}
-                      onPressedChange={() => {}}
+                      onPressedChange={() => {
+                        alert("Not implemented");
+                      }}
                       variant="normal"
                       tabIndex={-1}
                       icon={

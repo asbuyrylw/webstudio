@@ -10,6 +10,7 @@ import {
   Tooltip,
   ToggleGroupButton,
   Text,
+  Switch,
 } from "@webstudio-is/design-system";
 import { useIds } from "~/shared/form-utils";
 import type { PropAndMeta } from "../use-props-logic";
@@ -92,6 +93,16 @@ export const AnimateSection = ({
   const value: AnimationAction =
     prop?.type === "animationAction" ? prop.value : defaultActionValue;
 
+  const handleChange = (value: unknown) => {
+    const parsedValue = animationActionSchema.safeParse(value);
+    if (parsedValue.success) {
+      onChange(parsedValue.data);
+      return;
+    }
+
+    toast.error("Schemas are incompatible, try fix");
+  };
+
   return (
     <Grid
       css={{
@@ -101,14 +112,27 @@ export const AnimateSection = ({
       <Box css={{ height: theme.panel.paddingBlock }} />
 
       <Separator />
-      <Text
+
+      <Grid
+        gap={1}
+        align={"center"}
         css={{
+          gridTemplateColumns: "1fr auto",
           padding: theme.panel.paddingInline,
         }}
-        variant={"titles"}
       >
-        Animation
-      </Text>
+        <Text variant={"titles"}>Animation</Text>
+
+        <Tooltip content={value.isPinned ? "Unpin Animation" : "Pin Animation"}>
+          <Switch
+            checked={value.isPinned ?? false}
+            onCheckedChange={(isPinned) => {
+              handleChange({ ...value, isPinned });
+            }}
+          />
+        </Tooltip>
+      </Grid>
+
       <Separator />
 
       <Box css={{ height: theme.panel.paddingBlock }} />
@@ -132,14 +156,7 @@ export const AnimateSection = ({
               </Box>
             )}
             onChange={(typeValue) => {
-              const newValue = { ...value, type: typeValue, animations: [] };
-              const parsedValue = animationActionSchema.safeParse(newValue);
-              if (parsedValue.success) {
-                onChange(parsedValue.data);
-                return;
-              }
-
-              toast.error("Schemas are incompatible, try fix");
+              handleChange({ ...value, type: typeValue, animations: [] });
             }}
           />
         </Grid>
@@ -150,14 +167,7 @@ export const AnimateSection = ({
             type="single"
             value={value.axis ?? ("block" as const)}
             onValueChange={(axis) => {
-              const newValue = { ...value, axis };
-              const parsedValue = animationActionSchema.safeParse(newValue);
-              if (parsedValue.success) {
-                onChange(parsedValue.data);
-                return;
-              }
-
-              toast.error("Schemas are incompatible, try fix");
+              handleChange({ ...value, axis });
             }}
           >
             {Object.entries(animationAxisDescription).map(
@@ -205,14 +215,7 @@ export const AnimateSection = ({
                 </Box>
               )}
               onChange={(source) => {
-                const newValue = { ...value, source };
-                const parsedValue = animationActionSchema.safeParse(newValue);
-                if (parsedValue.success) {
-                  onChange(parsedValue.data);
-                  return;
-                }
-
-                toast.error("Schemas are incompatible, try fix");
+                handleChange({ ...value, source });
               }}
             />
           </Grid>
