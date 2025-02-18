@@ -269,9 +269,10 @@ export const AnimationPanelContent = ({ onChange, value, type }: Props) => {
           }}
         />
       </Grid>
-      <Grid gap={1} align={"center"} css={{ gridTemplateColumns: "1fr 1fr" }}>
+      <Grid gap={1} align={"center"} css={{ gridTemplateColumns: "2fr 1fr" }}>
         <Label htmlFor={fieldIds.rangeStartName}>Range Start</Label>
         <Label htmlFor={fieldIds.rangeStartValue}>Value</Label>
+
         <Select
           id={fieldIds.rangeStartName}
           options={timelineRangeNames}
@@ -333,6 +334,7 @@ export const AnimationPanelContent = ({ onChange, value, type }: Props) => {
             });
           }}
         />
+
         <Label htmlFor={fieldIds.rangeEndName}>Range End</Label>
         <Label htmlFor={fieldIds.rangeEndValue}>Value</Label>
         <Select

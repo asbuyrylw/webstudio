@@ -59,11 +59,17 @@ export const RANGE_UNITS = [
 
 export const rangeUnitSchema = literalUnion(RANGE_UNITS);
 
-export const rangeUnitValueSchema = z.object({
-  type: z.literal("unit"),
-  value: z.number(),
-  unit: rangeUnitSchema,
-});
+export const rangeUnitValueSchema = z.union([
+  z.object({
+    type: z.literal("unit"),
+    value: z.number(),
+    unit: rangeUnitSchema,
+  }),
+  z.object({
+    type: z.literal("unparsed"),
+    value: z.string(),
+  }),
+]);
 
 // @todo: Fix Keyframe Styles
 export const keyframeStylesSchema = z.record(StyleValue);
